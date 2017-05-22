@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RedashClient2</string>
+
+    <string name="navigation_drawer_open">ナビゲーションを開く</string>
+    <string name="navigation_drawer_close">ナビゲーションを閉じる</string>
+
+    <string name="action_settings">設定</string>
+    <string name="add_dashboard">ダッシュボードを追加する</string>
+    <string name="add_redash">Re:dashインスタンスを追加する</string>
+    <string name="manage_redash">Re:dashインスタンスを管理する</string>
+    <string name="manage_dashboard">ダッシュボードを管理する</string>
+    <string name="delete_instance">インスタンスを削除しますか?</string>
+    <string name="delete_dashboard">ダッシュボードを削除しますか?</string>
+    <string name="delete">削除する</string>
+    <string name="cancel">キャンセル</string>
+    <string name="prompt_dashboard">ダッシュボード</string>
+    <string name="action_add">追加する</string>
+    <string name="error_invalid_dashboard">入力した値が正しくありません。</string>
+    <string name="dashboard_archived">このダッシュボードはアーカイブされました。ダッシュボードリストからも削除されます。</string>
+    <string name="dashboard_existence_error">入力したダッシュボードは存在しません。</string>
+    <string name="dashboard_archived_error">入力したダッシュボードはアーカイブされています。</string>
+    <string name="dashboard_duplicate_error">入力したダッシュボードは既に登録されています。</string>
+
+    <!-- Strings related to register -->
+    <string name="prompt_url">URL(https://demo.redash.io)</string>
+    <string name="prompt_apikey">APIキー</string>
+    <string name="prompt_proxy_domain">プロキシードメイン(192.0.43.10) (任意)</string>
+    <string name="prompt_proxy_port_number">プロキシーポート番号 (任意)</string>
+
+    <string name="action_register_redash">Re:dashを登録する</string>
+    <string name="action_sign_in">登録する</string>
+    <string name="action_sign_in_short">登録</string>
+    <string name="error_invalid_url">URLが正しくありません。</string>
+    <string name="error_invalid_apikey">APIキーが正しくありません。</string>
+    <string name="error_incorrect_apikey">APIキーが正しくありません。</string>
+    <string name="error_field_required">値を入力してください。</string>
+    <string name="error_socket_connection">接続に失敗しました。入力値をご確認ください。</string>
+</resources>

@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">RedashClient2</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="add_dashboard">Add dashboard</string>
+    <string name="add_redash">Add Re:dash instance</string>
+    <string name="manage_redash">Manage Re:dash instances</string>
+    <string name="manage_dashboard">Manage dashboards</string>
+    <string name="delete_instance">Delete instance?</string>
+    <string name="delete_dashboard">Delete dashboard?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="prompt_dashboard">Dashboard</string>
+    <string name="action_add">Add</string>
+    <string name="error_invalid_dashboard">This dashboard is invalid</string>
+    <string name="dashboard_archived">This dashboard is archived and won\'t appear in the dashboards list.</string>
+    <string name="dashboard_existence_error">It doesn\'t exist. Sorry!</string>
+    <string name="dashboard_archived_error">It\'s archived. Sorry!</string>
+    <string name="dashboard_duplicate_error">It\'s already registered. Sorry!</string>
+
+    <!-- Strings related to register -->
+    <string name="prompt_url">URL(https://demo.redash.io)</string>
+    <string name="prompt_apikey">API KEY</string>
+    <string name="prompt_proxy_domain">Proxy domain(192.0.43.10) (optional)</string>
+    <string name="prompt_proxy_port_number">Proxy port number (optional)</string>
+
+    <string name="action_register_redash">Register</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_url">This URL address is invalid</string>
+    <string name="error_invalid_apikey">This API KEY is invalid</string>
+    <string name="error_incorrect_apikey">This API KEY is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="error_socket_connection">Socket connection failure. Please verify the connection properties.</string>
+</resources>
