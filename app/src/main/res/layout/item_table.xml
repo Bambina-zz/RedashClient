@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="tableWidget" type="com.example.hirono_mayuko.redashclient2.widget.TableWidget" />
     </data>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <RelativeLayout
+        android:background="@color/colorWhite"
+        android:layout_marginBottom="10dp"
+        android:paddingTop="10dp"
+        android:elevation="3dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@{tableWidget.mVisualName}" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="240dp" />
 
-    </LinearLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            app:tabBackground="@drawable/indicator"
+            app:tabGravity="center"
+            android:layout_below="@+id/pager"
+            app:tabIndicatorHeight="0dp"
+            app:tabMaxWidth="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 </layout>
