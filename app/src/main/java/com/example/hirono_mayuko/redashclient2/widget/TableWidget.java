@@ -3,6 +3,7 @@ package com.example.hirono_mayuko.redashclient2.widget;
 import com.example.hirono_mayuko.redashclient2.model.Dashboard;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
 import com.example.hirono_mayuko.redashclient2.item.TableWidgetItem;
+import com.example.hirono_mayuko.redashclient2.model.DashboardResponse;
 import com.example.hirono_mayuko.redashclient2.model.Widget;
 
 import org.json.JSONArray;
@@ -89,6 +90,14 @@ public class TableWidget extends Widget {
             System.out.println(name);
         }
         return colNames;
+    }
+
+    public String getQueryName(){
+        return mQueryName;
+    }
+
+    public String getVisualName(){
+        return mVisualName;
     }
 
     public ArrayList<ArrayList<String>> getPageData(int position){

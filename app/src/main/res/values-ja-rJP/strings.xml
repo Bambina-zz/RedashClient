@@ -36,4 +36,7 @@
     <string name="error_incorrect_apikey">APIキーが正しくありません。</string>
     <string name="error_field_required">値を入力してください。</string>
     <string name="error_socket_connection">接続に失敗しました。入力値をご確認ください。</string>
+
+    <!-- Strings related to table widget -->
+    <string name="less_than_msg">テーブルウィジェットは現在、25アイテムしか表示しません。すみません。</string>
 </resources>

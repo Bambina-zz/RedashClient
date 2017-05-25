@@ -4,7 +4,9 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See more details"/>
+        android:text="Sorry, table widget is now displaying less than 26 rows."/>
 </LinearLayout>

@@ -1,22 +1,21 @@
 package com.example.hirono_mayuko.redashclient2.item;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.hirono_mayuko.redashclient2.R;
-import com.example.hirono_mayuko.redashclient2.TableLastPage;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
 import com.example.hirono_mayuko.redashclient2.widget.TableWidget;
 import com.example.hirono_mayuko.redashclient2.databinding.ItemTableBinding;
@@ -44,14 +43,16 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
     @Override
     public void bind(ItemTableBinding binding, int position) {
         binding.setTableWidget(mWidget);
-        if (mWidget.mVisualName == null) {
+        if (mWidget.getVisualName() == null) {
             return;
         }
 
         binding.pager.setAdapter(new TablePagerAdapter());
         binding.tabLayout.setupWithViewPager(binding.pager, true);
 
-        System.out.println(mWidget.getData().get(0).get(0));
+        binding.progressBar.setVisibility(View.GONE);
+        binding.pager.setVisibility(View.VISIBLE);
+        binding.tabLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
             System.out.println("posi: " + position);
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (position == 5) {
-                View v = inflater.inflate(R.layout.table_last_page, container, false);
+                View v = inflater.inflate(R.layout.fragment_table_last_page, container, false);
                 container.addView(v);
                 return v;
             } else {
@@ -123,7 +124,8 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT);
                 tableRow.setLayoutParams(params);
-                tableRow.setBackgroundColor(0xfff0f0f0);
+                tableRow.setBackgroundColor(0xffeeeeee);
+                tableRow.setPadding(0,1,0,0);
 
                 // create a new linear layout to be added
                 params = new TableRow.LayoutParams(0,
@@ -137,11 +139,14 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
                     String column = row.get(i);
                     TextView textView = new TextView(mContext);
                     if (p == 0) {
-                        textView.setBackgroundColor(0xfff0f0f0);
+                        textView.setBackgroundColor(0xfff7f7f7);
+                        textView.setTypeface(Typeface.DEFAULT_BOLD);
+                        column = column.toUpperCase();
                     } else {
                         textView.setBackgroundColor(0xffffffff);
                     }
-                    textView.setPadding(30, 30, 30, 30);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                    textView.setPadding(20, 20, 20, 20);
                     LinearLayout.LayoutParams childParams = new LinearLayout.LayoutParams(0,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
                     childParams.weight = columnWeight;
