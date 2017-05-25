@@ -40,7 +40,7 @@
                 android:id="@+id/selectedValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"/>
+                android:textSize="20sp"/>
             <TextView
                 android:id="@+id/selectedPercentage"
                 android:layout_width="match_parent"
