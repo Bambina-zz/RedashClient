@@ -55,8 +55,13 @@ public class ColumnChartWidget extends Widget {
                 JSONObject obj = dataArray.getJSONObject(i);
 
                 String x = obj.getString(xAxis);
-                //SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'");
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                // TODO: Data type of "2017-5-26" and "2017-05-23T03:15:00+00:00" is datetime.
+                SimpleDateFormat format;
+                if(x.contains("T")){
+                    format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'");
+                } else {
+                    format = new SimpleDateFormat("yyyy-MM-dd");
+                }
                 long xMillisec = ConvertDateFromString.parse(x, format).getTime();
                 float y = Float.parseFloat(obj.getString(yAxis));
 

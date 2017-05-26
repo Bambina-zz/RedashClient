@@ -1,11 +1,12 @@
 package com.example.hirono_mayuko.redashclient2;
 
+import android.text.format.DateFormat;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 
@@ -49,10 +50,11 @@ public class ChartHelper {
         IAxisValueFormatter xFormatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                float time = minTime + value * (maxTime - minTime);
-                Date date = new Date((long) time);
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                return formatter.format(date);
+                Float time = minTime + value * (maxTime - minTime);
+                Date date = new Date(time.longValue());
+                long diff = maxTime - minTime;
+                String formatter = DateTimeHelper.getFormat(diff, value);
+                return DateFormat.format(formatter, date).toString();
             }
         };
         XAxis xAxis = barChart.getXAxis();
@@ -69,5 +71,26 @@ public class ChartHelper {
         YAxis yAxisLeft = barChart.getAxisLeft();
         yAxisLeft.setValueFormatter(new LargeValueFormatter());
         yAxisLeft.setAxisMinimum(0f);
+    }
+
+    private static class DateTimeHelper {
+        public static String getFormat(long diff, float value){
+            String formatter = "yyyy-MM-dd";
+
+            if(diff <= 1000L * 60 * 60 * 30){
+                if(value < 0 || 1 < value){
+                    formatter = "yyyy-MM-dd";
+                } else {
+                    formatter = "hh:mm";
+                }
+            } else if(diff <= 1000L * 60 * 60 * 24 * 30 * 12){
+                if(value < 0 || 1 < value){
+                    formatter = "yyyy-MM-dd";
+                } else {
+                    formatter = "MM-dd";
+                }
+            }
+            return formatter;
+        }
     }
 }
