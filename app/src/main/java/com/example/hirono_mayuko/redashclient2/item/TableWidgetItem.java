@@ -1,6 +1,7 @@
 package com.example.hirono_mayuko.redashclient2.item;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
@@ -15,6 +16,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.hirono_mayuko.redashclient2.DimensionHelper;
 import com.example.hirono_mayuko.redashclient2.R;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
 import com.example.hirono_mayuko.redashclient2.widget.TableWidget;
@@ -32,11 +34,13 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
     public String mWidgetId;
     private TableWidget mWidget;
     private MainActivity mainActivity;
+    private Context mContext;
 
     public TableWidgetItem(String widgetId, HashMap<String, String> visualData, MainActivity activity) {
         super();
         mWidgetId = widgetId;
         mainActivity = activity;
+        mContext = mainActivity.getContext();
         mWidget = new TableWidget(visualData, activity, this);
     }
 
@@ -44,6 +48,15 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
     public void bind(ItemTableBinding binding, int position) {
         binding.setTableWidget(mWidget);
         if (mWidget.getVisualName() == null) {
+            return;
+        }
+
+        if(mWidget.isFailed){
+            int layoutHeight = Math.round(DimensionHelper.convertDpToPx(mContext, 300f));
+            binding.widgetWrapper.getLayoutParams().height = layoutHeight;
+            binding.progressBar.setVisibility(View.GONE);
+            binding.errMsg.setText(mContext.getResources().getString(R.string.data_parse_error));
+            binding.errMsg.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -66,11 +79,9 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
 
     private class TablePagerAdapter extends PagerAdapter {
         private int numPages;
-        private Context mContext;
 
         public TablePagerAdapter() {
             super();
-            mContext = mainActivity.getContext();
             int size = mWidget.getData().size();
             if (size == 5) {
                 numPages = 6;
@@ -86,7 +97,6 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            System.out.println("posi: " + position);
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (position == 5) {
                 View v = inflater.inflate(R.layout.fragment_table_last_page, container, false);
@@ -145,8 +155,9 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
                     } else {
                         textView.setBackgroundColor(0xffffffff);
                     }
-                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-                    textView.setPadding(20, 20, 20, 20);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
+                    int padding = Math.round(DimensionHelper.convertDpToPx(mContext, 10f));
+                    textView.setPadding(padding, padding, padding, padding);
                     LinearLayout.LayoutParams childParams = new LinearLayout.LayoutParams(0,
                             LinearLayout.LayoutParams.WRAP_CONTENT);
                     childParams.weight = columnWeight;

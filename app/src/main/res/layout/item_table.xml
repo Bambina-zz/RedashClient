@@ -5,6 +5,7 @@
         <variable name="tableWidget" type="com.example.hirono_mayuko.redashclient2.widget.TableWidget" />
     </data>
     <LinearLayout
+        android:id="@+id/widgetWrapper"
         android:orientation="vertical"
         android:background="@color/colorWhite"
         android:layout_marginBottom="10dp"
@@ -31,10 +32,20 @@
             android:layout_marginTop="150dp"
             android:visibility="visible"/>
 
+        <TextView
+            android:id="@+id/errMsg"
+            android:gravity="center"
+            android:layout_marginTop="100dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="225dp"
             android:layout_marginTop="10dp"
             android:visibility="invisible"/>
 

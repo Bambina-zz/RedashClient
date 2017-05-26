@@ -30,6 +30,7 @@ public class LineChartWidget extends Widget {
     public LineData mLineData;
     public Long maxTime = 0L;
     public Long minTime = 0L;
+    public boolean isFailed = false;
     private HashMap<String, String> mVisualData;
     private MainActivity mainActivity;
     private LineChartWidgetItem mItem;
@@ -56,8 +57,9 @@ public class LineChartWidget extends Widget {
         String series = mVisualData.get(Dashboard.SERIES);
 
         // TODO: In this function xAxisType is supposed to be "datetime".
-        try {
-            for(int i=0; i<dataArray.length(); i++){
+
+        for(int i=0; i<dataArray.length(); i++){
+            try {
                 JSONObject obj = dataArray.getJSONObject(i);
                 String x = obj.getString(xAxis);
                 String y = obj.getString(yAxis);
@@ -84,60 +86,63 @@ public class LineChartWidget extends Widget {
                     list.add(entry);
                     mData.put(groupName, list);
                 }
+            } catch (JSONException e){
+                e.printStackTrace();
+                isFailed = true;
+                break;
             }
-
-            // Sort entries and get maxTime and minTime.
-            for(String key: mData.keySet()){
-                List<HashMap<String, Object>> entries = mData.get(key);
-                Collections.sort(entries, new Comparator<HashMap<String, Object>>(){
-                    @Override
-                    public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
-                        Long l1 = (Long) o1.get(X_MILLI_SEC);
-                        Long l2 = (Long) o2.get(X_MILLI_SEC);
-                        return l1.compareTo(l2);
-                    }
-                });
-                Long firstTime = (Long) entries.get(0).get(X_MILLI_SEC);
-                Long lastTime = (Long) entries.get(entries.size()-1).get(X_MILLI_SEC);
-
-                if(minTime == 0 || minTime > firstTime){
-                    minTime = firstTime;
-                }
-
-                if(maxTime == 0 || maxTime < lastTime){
-                    maxTime = lastTime;
-                }
-            }
-
-            // Normalize x value(DateTime). Like (xmsec - min) / (max - min).
-            for(String key: mData.keySet()){
-                List<HashMap<String, Object>> entries = mData.get(key);
-                for(HashMap<String, Object> entry: entries){
-                    Long xmsec = (Long) entry.get(X_MILLI_SEC);
-                    float normalizedX =  (float) (xmsec - minTime) / (maxTime - minTime);
-                    entry.put(NORMALIZED_X, normalizedX);
-                }
-            }
-
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            int index = 0;
-            for(String groupName: mData.keySet()){
-                List<HashMap<String, Object>> group = mData.get(groupName);
-                ArrayList<Entry> list = new ArrayList<>();
-                for(HashMap<String, Object> entry:group){
-                    list.add(new Entry((Float) entry.get(NORMALIZED_X), (Float) entry.get(Y)));
-                }
-                LineDataSet a = new LineDataSet(list, groupName);
-                int[] color = mainActivity.getChartColor(index);
-                a.setColors(color, mainActivity.getContext());
-                a.setDrawCircles(false);
-                dataSets.add(a);
-                index++;
-            }
-            mLineData = new LineData(dataSets);
-        } catch (JSONException e){
-            e.printStackTrace();
         }
+
+        // Sort entries and get maxTime and minTime.
+        for(String key: mData.keySet()){
+            List<HashMap<String, Object>> entries = mData.get(key);
+            Collections.sort(entries, new Comparator<HashMap<String, Object>>(){
+                @Override
+                public int compare(HashMap<String, Object> o1, HashMap<String, Object> o2) {
+                    Long l1 = (Long) o1.get(X_MILLI_SEC);
+                    Long l2 = (Long) o2.get(X_MILLI_SEC);
+                    return l1.compareTo(l2);
+                }
+            });
+            Long firstTime = (Long) entries.get(0).get(X_MILLI_SEC);
+            Long lastTime = (Long) entries.get(entries.size()-1).get(X_MILLI_SEC);
+
+            if(minTime == 0 || minTime > firstTime){
+                minTime = firstTime;
+            }
+
+            if(maxTime == 0 || maxTime < lastTime){
+                maxTime = lastTime;
+            }
+        }
+
+        // Normalize x value(DateTime). Like (xmsec - min) / (max - min).
+        for(String key: mData.keySet()){
+            List<HashMap<String, Object>> entries = mData.get(key);
+            for(HashMap<String, Object> entry: entries){
+                Long xmsec = (Long) entry.get(X_MILLI_SEC);
+                float normalizedX =  (float) (xmsec - minTime) / (maxTime - minTime);
+                entry.put(NORMALIZED_X, normalizedX);
+            }
+        }
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        int index = 0;
+        for(String groupName: mData.keySet()){
+            List<HashMap<String, Object>> group = mData.get(groupName);
+            ArrayList<Entry> list = new ArrayList<>();
+            for(HashMap<String, Object> entry:group){
+                list.add(new Entry((Float) entry.get(NORMALIZED_X), (Float) entry.get(Y)));
+            }
+            LineDataSet a = new LineDataSet(list, groupName);
+            int[] color = mainActivity.getChartColor(index);
+            a.setColors(color, mainActivity.getContext());
+            a.setDrawCircles(false);
+            dataSets.add(a);
+            index++;
+        }
+        mLineData = new LineData(dataSets);
+
         mItem.notifyWidgetChanged();
     }
 

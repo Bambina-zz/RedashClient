@@ -42,16 +42,16 @@ public class PieChartMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         PieEntry pe = (PieEntry) e;
-        String value = String.format(Locale.US, "%1$,3d円", Math.round(pe.getY()));
         Object data = pe.getData();
+
         HashMap<String, String> obj;
         if(data instanceof Map){
             obj = (HashMap<String, String>) data;
             mName.setText(obj.get("name"));
+            mValue.setText(obj.get("value"));
             mPercentage.setText(obj.get("percentage"));
         }
 
-        mValue.setText(value);
         mRelativeLayout.setVisibility(View.GONE);
         // this will perform necessary layouting
         super.refreshContent(e, highlight);
@@ -68,10 +68,4 @@ public class PieChartMarkerView extends MarkerView {
 
         return mOffset;
     }
-
-    /*@SuppressWarnings("unchecked")
-    public static <T> T autoCast(Object obj) {
-        T castObj = (T) obj;
-        return castObj;
-    }*/
 }

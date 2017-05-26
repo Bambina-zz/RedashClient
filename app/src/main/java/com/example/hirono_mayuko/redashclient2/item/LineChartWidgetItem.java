@@ -1,9 +1,11 @@
 package com.example.hirono_mayuko.redashclient2.item;
 
 
+import android.content.Context;
 import android.view.View;
 
 import com.example.hirono_mayuko.redashclient2.ChartHelper;
+import com.example.hirono_mayuko.redashclient2.DimensionHelper;
 import com.example.hirono_mayuko.redashclient2.widget.LineChartWidget;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
 import com.example.hirono_mayuko.redashclient2.R;
@@ -33,6 +35,16 @@ public class LineChartWidgetItem extends Item<ItemLineChartBinding> {
         binding.setLineChartWidget(mWidget);
 
         if(mWidget.mLineData == null) {
+            return;
+        }
+
+        if(mWidget.isFailed){
+            Context c = mainActivity.getContext();
+            int layoutHeight = Math.round(DimensionHelper.convertDpToPx(c, 300f));
+            binding.widgetWrapper.getLayoutParams().height = layoutHeight;
+            binding.progressBar.setVisibility(View.GONE);
+            binding.errMsg.setText(c.getResources().getString(R.string.data_parse_error));
+            binding.errMsg.setVisibility(View.VISIBLE);
             return;
         }
 

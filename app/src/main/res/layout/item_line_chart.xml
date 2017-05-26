@@ -4,6 +4,7 @@
         <variable name="lineChartWidget" type="com.example.hirono_mayuko.redashclient2.widget.LineChartWidget" />
     </data>
     <LinearLayout
+        android:id="@+id/widgetWrapper"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +31,16 @@
             android:layout_gravity="center"
             android:layout_marginTop="150dp"
             android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/errMsg"
+            android:gravity="center"
+            android:layout_marginTop="100dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <com.github.mikephil.charting.charts.LineChart
             xmlns:android="http://schemas.android.com/apk/res/android"

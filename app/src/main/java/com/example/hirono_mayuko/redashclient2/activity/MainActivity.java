@@ -152,8 +152,11 @@ public class MainActivity extends AppCompatActivity
             setConnectionProperties(selectedRedash);
 
             mAdapter.clear();
-            // Load the dashboard data.
-            if(!dashboards.isEmpty()){
+            if(dashboards.isEmpty()){
+                TextView tv = (TextView) findViewById(R.id.noDashboard);
+                tv.setVisibility(View.VISIBLE);
+            } else {
+                // Load the dashboard data.
                 loadDashboardData(selectedDashboard);
             }
         }
@@ -183,6 +186,7 @@ public class MainActivity extends AppCompatActivity
             switch (resultCode){
                 case RESULT_OK:
                     drawer.closeDrawer(GravityCompat.START);
+                    findViewById(R.id.noDashboard).setVisibility(View.GONE);
                     selectedRedash = data.getIntExtra(SELECTED_REDASH, 0);
                     initializeDrawerMenu(selectedRedash, dashboards.size()-1);
                     mAdapter.clear();
@@ -259,8 +263,6 @@ public class MainActivity extends AppCompatActivity
         if (r.isProxy()) {
             String redash_proxy_address = r.getProxyUrl();
             int redash_proxy_port = Integer.parseInt(r.getProxyPortNumber());
-            System.out.println(redash_proxy_address);
-            System.out.println(redash_proxy_port);
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(redash_proxy_address, redash_proxy_port));
             c = new OkHttpClient.Builder().proxy(proxy).build();
         } else {
@@ -286,7 +288,6 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(Call call, Response response) throws IOException {
                 boolean isSuccessful = response.isSuccessful();
                 String body = response.body().string();
-                System.out.println(body);
                 JSONObject json = null;
                 try {
                     json = new JSONObject(body);
@@ -415,7 +416,7 @@ public class MainActivity extends AppCompatActivity
         if(isVisibleRedashMenu){
             if(id == redashes.size()){
                 Intent i = new Intent(this, RegisterActivity.class);
-                i.putExtra(SELECTED_REDASH, selectedRedash.toString());
+                i.putExtra(SELECTED_REDASH, selectedRedash);
                 startActivityForResult(i, INTENT_ADD_REDASH);
             } else if(id == redashes.size() + 1){
                 Intent i = new Intent(this, ManageRedashActivity.class);

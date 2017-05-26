@@ -3,7 +3,6 @@ package com.example.hirono_mayuko.redashclient2.widget;
 import com.example.hirono_mayuko.redashclient2.model.Dashboard;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
 import com.example.hirono_mayuko.redashclient2.item.TableWidgetItem;
-import com.example.hirono_mayuko.redashclient2.model.DashboardResponse;
 import com.example.hirono_mayuko.redashclient2.model.Widget;
 
 import org.json.JSONArray;
@@ -13,7 +12,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  * Created by hirono-mayuko on 2017/04/24.
@@ -24,6 +22,7 @@ public class TableWidget extends Widget {
     private MainActivity mainActivity;
     private TableWidgetItem mItem;
 
+    public boolean isFailed = false;
     private ArrayList<String> mColNames;
     private static final int NUM_ROWS = 6;
     private static final int NUM_PAGES = 5;
@@ -44,6 +43,7 @@ public class TableWidget extends Widget {
             mColNames = getColNames(dataArray.getJSONObject(0));
         } catch (JSONException e){
             e.printStackTrace();
+            isFailed = true;
         }
         mData = new ArrayList<>(NUM_PAGES);
         int len = dataArray.length();
@@ -68,6 +68,8 @@ public class TableWidget extends Widget {
                 page.add(row);
             } catch (JSONException e){
                 e.printStackTrace();
+                isFailed = true;
+                break;
             }
         }
         mData.add(page);
@@ -87,7 +89,6 @@ public class TableWidget extends Widget {
         while(keys.hasNext()){
             String name = keys.next();
             colNames.add(name);
-            System.out.println(name);
         }
         return colNames;
     }

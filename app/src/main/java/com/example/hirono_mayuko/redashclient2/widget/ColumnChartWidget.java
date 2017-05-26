@@ -28,6 +28,7 @@ public class ColumnChartWidget extends Widget {
     public BarData mBarData;
     public Long minTime = 0L;
     public Long maxTime = 0L;
+    public boolean isFailed = false;
     private HashMap<String, String> mVisualData;
     private MainActivity mainActivity;
     private ColumnChartWidgetItem mItem;
@@ -81,6 +82,8 @@ public class ColumnChartWidget extends Widget {
                 }
             } catch (JSONException e){
                 e.printStackTrace();
+                isFailed = true;
+                break;
             }
         }
 

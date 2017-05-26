@@ -1,9 +1,11 @@
 package com.example.hirono_mayuko.redashclient2.item;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.example.hirono_mayuko.redashclient2.DimensionHelper;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
 import com.example.hirono_mayuko.redashclient2.PieChartListItem;
 import com.example.hirono_mayuko.redashclient2.PieChartMarkerView;
@@ -35,7 +37,17 @@ public class PieChartWidgetItem extends Item<ItemPieChartBinding> {
     public void bind(ItemPieChartBinding binding, int position){
         binding.setPieChartWidget(mWidget);
 
-        if(mWidget.mPieData == null || mWidget.mPieListItems.size() <= 0){
+        if(mWidget.mPieData == null){
+            return;
+        }
+
+        if(mWidget.isFailed) {
+            Context c = mainActivity.getContext();
+            int layoutHeight = Math.round(DimensionHelper.convertDpToPx(c, 300f));
+            binding.widgetWrapper.getLayoutParams().height = layoutHeight;
+            binding.progressBar.setVisibility(View.GONE);
+            binding.errMsg.setText(c.getResources().getString(R.string.data_parse_error));
+            binding.errMsg.setVisibility(View.VISIBLE);
             return;
         }
 

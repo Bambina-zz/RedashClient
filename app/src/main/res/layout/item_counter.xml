@@ -4,6 +4,7 @@
         <variable name="counterWidget" type="com.example.hirono_mayuko.redashclient2.widget.CounterWidget" />
     </data>
     <LinearLayout
+        android:id="@+id/widgetWrapper"
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:orientation="vertical"
@@ -19,6 +20,15 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:visibility="visible"/>
+        <TextView
+            android:id="@+id/errMsg"
+            android:gravity="center"
+            android:layout_marginTop="100dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/queryName"
             android:layout_width="match_parent"

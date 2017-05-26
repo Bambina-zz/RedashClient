@@ -2,7 +2,6 @@ package com.example.hirono_mayuko.redashclient2.widget;
 
 import com.example.hirono_mayuko.redashclient2.model.Dashboard;
 import com.example.hirono_mayuko.redashclient2.PieChartListItem;
-import com.example.hirono_mayuko.redashclient2.ServiceNameFormatter;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
 import com.example.hirono_mayuko.redashclient2.item.PieChartWidgetItem;
 import com.example.hirono_mayuko.redashclient2.model.Widget;
@@ -15,12 +14,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -31,6 +31,7 @@ public class PieChartWidget extends Widget {
     private HashMap<String, String> mVisualData;
     private MainActivity mainActivity;
     private PieChartWidgetItem mItem;
+    public boolean isFailed = false;
     public PieData mPieData;
     public List<PieChartListItem> mPieListItems = new ArrayList<>();
 
@@ -48,52 +49,59 @@ public class PieChartWidget extends Widget {
 
         // Collect data in rows into HashMap.
         // There are rows which has the same x-axis value.
-        HashMap<String, Float> pairsOfXY = new HashMap<>();
-        Float mSum = 0f;
-        try {
-            for(int i=0; i < dataArray.length(); i++){
+        HashMap<String, BigDecimal> pairsOfXY = new HashMap<>();
+        BigDecimal mSum = new BigDecimal(0);
+
+        for(int i=0; i < dataArray.length(); i++){
+            try {
                 JSONObject obj = dataArray.getJSONObject(i);
                 String name = obj.getString(xAxis);
-                Float value = Float.parseFloat(obj.getString(yAxis));
-                mSum += value;
+                BigDecimal value = new BigDecimal(obj.getString(yAxis));
+                mSum = mSum.add(value);
                 if(pairsOfXY.containsKey(name)){
-                    Float y = pairsOfXY.get(name);
-                    pairsOfXY.put(name, y + value);
+                    BigDecimal y = pairsOfXY.get(name);
+                    pairsOfXY.put(name, y.add(value));
                 } else {
                     pairsOfXY.put(name, value);
                 }
+            } catch (JSONException e){
+                e.printStackTrace();
+                isFailed = true;
+                break;
             }
-        } catch (JSONException e){
-            e.printStackTrace();
         }
 
         // Sort hashmap of pairs(x, y).
-        List<Map.Entry<String, Float>> sortedPairsOfXY =  sort(pairsOfXY);
+        List<Map.Entry<String, BigDecimal>> sortedPairsOfXY =  sort(pairsOfXY);
 
         // Put hashmap into member variables.
         List<PieEntry> mPieEntries = new ArrayList<>();
-        for(Map.Entry<String, Float> pair:sortedPairsOfXY){
-            String nameX = ServiceNameFormatter.getServiceName(mainActivity.getContext(), pair.getKey());
-            Float valueY = pair.getValue();
+        for(Map.Entry<String, BigDecimal> pair:sortedPairsOfXY){
+            String nameX = pair.getKey();
+            BigDecimal valueY = pair.getValue();
             // TODO: Some of them are hard coding.
-            String formatValueY = String.format(Locale.US, "%1$,3d円", Math.round(pair.getValue()));
-            Float percentageF = 100 * valueY / mSum;
-            String percentage = String.format(Locale.US, "%.2f%%", percentageF);
+            DecimalFormat df = new DecimalFormat("#,###");
+            String formatValueY = df.format(valueY);
+
+            BigDecimal percentageBD = (valueY.divide(mSum, 4, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100));
+            DecimalFormat df2 = new DecimalFormat(" #,##0.00 '%'");
+            String percentage = df2.format(percentageBD);
 
             // For list view.
             PieChartListItem item = new PieChartListItem(nameX, formatValueY, percentage);
             mPieListItems.add(item);
 
-            Map<String, String> obj = new HashMap<>(2);
+            Map<String, String> obj = new HashMap<>(3);
             obj.put("percentage", percentage);
+            obj.put("value", formatValueY);
             obj.put("name", nameX);
 
             // For labels on the chart.
-            if(percentageF < 5f){
+            if(0 > percentageBD.compareTo(new BigDecimal(5))){
                 // A label will be displayed on the chart, when its value is more than 5%.
                 nameX = "";
             }
-            PieEntry entry = new PieEntry(valueY, nameX, obj);
+            PieEntry entry = new PieEntry(valueY.floatValue(), nameX, obj);
             mPieEntries.add(entry);
         }
 
@@ -110,11 +118,11 @@ public class PieChartWidget extends Widget {
         mItem.notifyWidgetChanged();
     }
 
-    private List<Map.Entry<String, Float>> sort(HashMap<String, Float> pairsOfXY){
-        List<Map.Entry<String, Float>> sortedPairsOfXY =  new ArrayList<>(pairsOfXY.entrySet());
-        Collections.sort(sortedPairsOfXY, new Comparator<Map.Entry<String, Float>>() {
+    private List<Map.Entry<String, BigDecimal>> sort(HashMap<String, BigDecimal> pairsOfXY){
+        List<Map.Entry<String, BigDecimal>> sortedPairsOfXY =  new ArrayList<>(pairsOfXY.entrySet());
+        Collections.sort(sortedPairsOfXY, new Comparator<Map.Entry<String, BigDecimal>>() {
             @Override
-            public int compare(Map.Entry<String,Float> entry1, Map.Entry<String,Float> entry2) {
+            public int compare(Map.Entry<String,BigDecimal> entry1, Map.Entry<String,BigDecimal> entry2) {
                 return (entry2.getValue()).compareTo(entry1.getValue());
             }
         });

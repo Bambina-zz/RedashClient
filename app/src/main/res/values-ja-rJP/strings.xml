@@ -2,8 +2,10 @@
 <resources>
     <string name="app_name">RedashClient2</string>
 
+    <!-- Strings related to Main activity -->
     <string name="navigation_drawer_open">ナビゲーションを開く</string>
     <string name="navigation_drawer_close">ナビゲーションを閉じる</string>
+    <string name="no_dashboard">ナビゲーションメニューからダッシュボードを登録してください。</string>
 
     <string name="action_settings">設定</string>
     <string name="add_dashboard">ダッシュボードを追加する</string>
@@ -39,4 +41,5 @@
 
     <!-- Strings related to table widget -->
     <string name="less_than_msg">テーブルウィジェットは現在、25アイテムしか表示しません。すみません。</string>
+    <string name="data_parse_error">すみません。このウィジェットは対応していません。JSONパーサーが例外を投げました。</string>
 </resources>

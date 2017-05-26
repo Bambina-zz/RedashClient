@@ -21,6 +21,7 @@ public class CounterWidget extends Widget {
     private MainActivity mainActivity;
     private CounterWidgetItem mItem;
 
+    public boolean isFailed = false;
     public String mValue;
     public String mVisualName;
     public String mQueryName;
@@ -43,6 +44,7 @@ public class CounterWidget extends Widget {
             mValue = String.format(Locale.US, "%1$,3d", val);
         } catch (JSONException e) {
             e.printStackTrace();
+            isFailed = true;
         }
         mItem.notifyWidgetChanged();
     }
