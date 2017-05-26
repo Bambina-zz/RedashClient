@@ -38,6 +38,12 @@
     <string name="error_field_required">This field is required</string>
     <string name="error_socket_connection">Socket connection failure. Please verify the connection properties.</string>
 
+    <!-- Strings related to manage dashboard activity -->
+    <string name="no_dashboard_to_manage">No dashboard left to manage.</string>
+
+    <!-- Strings related to manage redash activity -->
+    <string name="no_redash_to_manage">No instance left to manage.</string>
+
     <!-- Strings related to table widget -->
     <string name="less_than_msg">Sorry, table widget is now displaying less than 26 rows.</string>
 

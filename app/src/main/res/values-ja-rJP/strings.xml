@@ -39,6 +39,12 @@
     <string name="error_field_required">値を入力してください。</string>
     <string name="error_socket_connection">接続に失敗しました。入力値をご確認ください。</string>
 
+    <!-- Strings related to manage dashboard activity -->
+    <string name="no_dashboard_to_manage">ダッシュボードがありません。</string>
+
+    <!-- Strings related to manage redash activity -->
+    <string name="no_redash_to_manage">インスタンスがありません。</string>
+
     <!-- Strings related to table widget -->
     <string name="less_than_msg">テーブルウィジェットは現在、25アイテムしか表示しません。すみません。</string>
     <string name="data_parse_error">すみません。このウィジェットは対応していません。JSONパーサーが例外を投げました。</string>

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 import com.example.hirono_mayuko.redashclient2.DashboardRecyclerViewAdapter;
 import com.example.hirono_mayuko.redashclient2.DashboardViewHolder;
@@ -103,6 +104,12 @@ public class ManageDashboardActivity extends AppCompatActivity {
         TouchHelperCallback cb = new TouchHelperCallback();
         ItemTouchHelper helper = new ItemTouchHelper(cb);
         helper.attachToRecyclerView(mRecyclerView);
+
+        if(mDashboards.size() == 0){
+           findViewById(R.id.noDashboard).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.noDashboard).setVisibility(View.GONE);
+        }
     }
 
     @Override
