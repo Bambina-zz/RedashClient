@@ -1,5 +1,6 @@
 package com.example.hirono_mayuko.redashclient2.widget;
 
+import com.example.hirono_mayuko.redashclient2.AxisHelper;
 import com.example.hirono_mayuko.redashclient2.ConvertDateFromString;
 import com.example.hirono_mayuko.redashclient2.model.Dashboard;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
@@ -49,6 +50,17 @@ public class ColumnChartWidget extends Widget {
     public void setData(JSONArray dataArray){
         String xAxis = mVisualData.get(Dashboard.X_AXIS);
         String yAxis = mVisualData.get(Dashboard.Y_AXIS);
+        String isMultipleYAxis = mVisualData.get(Dashboard.IS_MULTIPLE_Y_AXIS);
+        if(isMultipleYAxis.equals("true")){
+            // Determine y axis from candidates.
+            try {
+                yAxis = AxisHelper.determineAxis(dataArray.getJSONObject(0), yAxis);
+            } catch (JSONException e){
+                e.printStackTrace();
+                isJsonException = true;
+            }
+        }
+
         String series = mVisualData.get(Dashboard.SERIES);
         HashMap<String, List<HashMap<String, Object>>> mData = new HashMap<>();
         mBarData = new BarData();

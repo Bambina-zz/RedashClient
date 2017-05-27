@@ -73,6 +73,7 @@ public class Dashboard extends RealmObject {
     public static final String SERIES = "series";
     public static final String X_AXIS = "xAxis";
     public static final String Y_AXIS = "yAxis";
+    public static final String IS_MULTIPLE_Y_AXIS = "isMultipleYAxis";
     public static final String X_AXIS_TYPE = "xAxisType";
     public static final String Y_AXIS_TYPE = "yAxisType";
     public static final String X_AXIS_TITLE = "xAxisTitle";
@@ -138,6 +139,7 @@ public class Dashboard extends RealmObject {
             String series = "";
             String xAxis = "";
             String yAxis = "";
+            String isMultipleYAxis = "false";
             String xAxisType = "";
             String yAxisType = "";
             String xAxisTitle = "";
@@ -195,7 +197,13 @@ public class Dashboard extends RealmObject {
                     if(columnMapping.getString(key).equals(X)){
                         xAxis = key;
                     } else if(columnMapping.getString(key).equals(Y)){
-                        yAxis = key;
+                        if(isMultipleYAxis.equals("false")){
+                            yAxis = key;
+                            isMultipleYAxis = "true";
+                        } else {
+                            yAxis += ",";
+                            yAxis += key;
+                        }
                     } else if(columnMapping.getString(key).equals(SERIES)){
                         series = key;
                     }
@@ -218,6 +226,7 @@ public class Dashboard extends RealmObject {
             visualData.put(SERIES, series);
             visualData.put(X_AXIS, xAxis);
             visualData.put(Y_AXIS, yAxis);
+            visualData.put(IS_MULTIPLE_Y_AXIS, isMultipleYAxis);
             visualData.put(X_AXIS_TYPE, xAxisType);
             visualData.put(Y_AXIS_TYPE, yAxisType);
             visualData.put(X_AXIS_TITLE, xAxisTitle);
