@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by hirono-mayuko on 2017/04/24.
@@ -49,18 +50,19 @@ public class ColumnChartWidget extends Widget {
         String yAxis = mVisualData.get(Dashboard.Y_AXIS);
         String series = mVisualData.get(Dashboard.SERIES);
         HashMap<String, List<HashMap<String, Object>>> mData = new HashMap<>();
+        Locale locale = Locale.getDefault();
 
         for(int i=0; i < dataArray.length(); i++){
             try {
                 JSONObject obj = dataArray.getJSONObject(i);
 
                 String x = obj.getString(xAxis);
-                // TODO: Data type of "2017-5-26" and "2017-05-23T03:15:00+00:00" is datetime.
+                // TODO: Data type of both "2017-5-26" and "2017-05-23T03:15:00+00:00" is datetime.
                 SimpleDateFormat format;
                 if(x.contains("T")){
-                    format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'");
+                    format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'", locale);
                 } else {
-                    format = new SimpleDateFormat("yyyy-MM-dd");
+                    format = new SimpleDateFormat("yyyy-MM-dd", locale);
                 }
                 long xMillisec = ConvertDateFromString.parse(x, format).getTime();
                 float y = Float.parseFloat(obj.getString(yAxis));

@@ -3,6 +3,7 @@ package com.example.hirono_mayuko.redashclient2.item;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.hirono_mayuko.redashclient2.ChartHelper;
 import com.example.hirono_mayuko.redashclient2.DimensionHelper;
@@ -34,6 +35,11 @@ public class LineChartWidgetItem extends Item<ItemLineChartBinding> {
     public void bind(ItemLineChartBinding binding, int position){
         binding.setLineChartWidget(mWidget);
 
+        binding.errMsg.setVisibility(View.GONE);
+        binding.title.setVisibility(View.GONE);
+        binding.chart.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+
         if(mWidget.mLineData == null) {
             return;
         }
@@ -51,7 +57,9 @@ public class LineChartWidgetItem extends Item<ItemLineChartBinding> {
         ChartHelper.lineChartAxisOptions(binding.chart, mWidget.maxTime, mWidget.minTime);
         binding.chart.setData(mWidget.mLineData);
         binding.chart.invalidate();
+        binding.widgetWrapper.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         binding.progressBar.setVisibility(View.GONE);
+        binding.title.setVisibility(View.VISIBLE);
         binding.chart.setVisibility(View.VISIBLE);
     }
 

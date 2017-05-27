@@ -22,6 +22,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textSize="23sp"
+            android:visibility="gone"
             android:text="@{tableWidget.mQueryName}" />
 
         <ProgressBar
@@ -29,7 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:visibility="visible"/>
 
         <TextView
@@ -47,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="225dp"
             android:layout_marginTop="10dp"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
@@ -58,7 +60,7 @@
             app:tabMaxWidth="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
     </LinearLayout>
 </layout>

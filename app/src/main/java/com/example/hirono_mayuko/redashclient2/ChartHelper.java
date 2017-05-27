@@ -10,7 +10,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -25,8 +24,9 @@ public class ChartHelper {
             public String getFormattedValue(float value, AxisBase axis) {
                 float time = minTime + value * (maxTime - minTime);
                 Date date = new Date((long) time);
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                return formatter.format(date);
+                long diff = maxTime - minTime;
+                String formatter = DateTimeHelper.getFormat(diff, value);
+                return DateFormat.format(formatter, date).toString();
             }
 
         };

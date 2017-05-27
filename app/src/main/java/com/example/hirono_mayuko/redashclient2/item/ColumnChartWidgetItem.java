@@ -2,6 +2,7 @@ package com.example.hirono_mayuko.redashclient2.item;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.hirono_mayuko.redashclient2.ChartHelper;
 import com.example.hirono_mayuko.redashclient2.DimensionHelper;
@@ -33,6 +34,11 @@ public class ColumnChartWidgetItem extends Item<ItemColumnChartBinding> {
     public void bind(ItemColumnChartBinding binding, int position){
         binding.setColumnChartWidget(mWidget);
 
+        binding.errMsg.setVisibility(View.GONE);
+        binding.title.setVisibility(View.GONE);
+        binding.chart.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+
         if(mWidget.mBarData == null){
             return;
         }
@@ -56,7 +62,9 @@ public class ColumnChartWidgetItem extends Item<ItemColumnChartBinding> {
         mWidget.mBarData.setBarWidth(barWidth);
         binding.chart.setData(mWidget.mBarData);
         binding.chart.invalidate();
+        binding.widgetWrapper.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         binding.progressBar.setVisibility(View.GONE);
+        binding.title.setVisibility(View.VISIBLE);
         binding.chart.setVisibility(View.VISIBLE);
     }
 

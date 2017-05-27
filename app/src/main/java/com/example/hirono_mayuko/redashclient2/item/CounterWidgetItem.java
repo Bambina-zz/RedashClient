@@ -2,6 +2,7 @@ package com.example.hirono_mayuko.redashclient2.item;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.hirono_mayuko.redashclient2.DimensionHelper;
 import com.example.hirono_mayuko.redashclient2.widget.CounterWidget;
@@ -32,6 +33,11 @@ public class CounterWidgetItem extends Item<ItemCounterBinding> {
     public void bind(ItemCounterBinding binding, int position){
         binding.setCounterWidget(mWidget);
 
+        binding.errMsg.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.queryName.setVisibility(View.GONE);
+        binding.textVal.setVisibility(View.GONE);
+        binding.visualName.setVisibility(View.GONE);
         if(mWidget.mValue == null){
             return;
         }
@@ -46,6 +52,7 @@ public class CounterWidgetItem extends Item<ItemCounterBinding> {
             return;
         }
 
+        binding.widgetWrapper.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         binding.progressBar.setVisibility(View.GONE);
         binding.queryName.setVisibility(View.VISIBLE);
         binding.textVal.setVisibility(View.VISIBLE);

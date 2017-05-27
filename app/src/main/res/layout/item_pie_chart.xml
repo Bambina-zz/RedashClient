@@ -20,6 +20,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textSize="23sp"
+            android:visibility="gone"
             android:text="@{pieChartWidget.getQueryName()}" />
 
         <LinearLayout
@@ -55,7 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:visibility="visible"/>
 
         <TextView
@@ -71,11 +73,11 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="200dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
         <include layout="@layout/divider" />
 
@@ -84,7 +86,7 @@
             android:scrollbars="none"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
     </LinearLayout>
 </layout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.hirono_mayuko.redashclient2.DimensionHelper;
 import com.example.hirono_mayuko.redashclient2.activity.MainActivity;
@@ -36,6 +37,13 @@ public class PieChartWidgetItem extends Item<ItemPieChartBinding> {
     @Override
     public void bind(ItemPieChartBinding binding, int position){
         binding.setPieChartWidget(mWidget);
+
+        binding.errMsg.setVisibility(View.GONE);
+        binding.title.setVisibility(View.GONE);
+        binding.chart.setVisibility(View.GONE);
+        binding.selectedItem.setVisibility(View.GONE);
+        binding.pieRecyclerView.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
 
         if(mWidget.mPieData == null){
             return;
@@ -75,7 +83,9 @@ public class PieChartWidgetItem extends Item<ItemPieChartBinding> {
         binding.pieRecyclerView.setAdapter(mAdapter);
 
         // Hide progress bar and display contents
+        binding.widgetWrapper.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         binding.progressBar.setVisibility(View.GONE);
+        binding.title.setVisibility(View.VISIBLE);
         binding.selectedItem.setVisibility(View.VISIBLE);
         binding.chart.setVisibility(View.VISIBLE);
         binding.pieRecyclerView.setVisibility(View.VISIBLE);

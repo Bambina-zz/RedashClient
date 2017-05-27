@@ -47,6 +47,13 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
     @Override
     public void bind(ItemTableBinding binding, int position) {
         binding.setTableWidget(mWidget);
+
+        binding.errMsg.setVisibility(View.GONE);
+        binding.title.setVisibility(View.GONE);
+        binding.pager.setVisibility(View.GONE);
+        binding.tabLayout.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+
         if (mWidget.getVisualName() == null) {
             return;
         }
@@ -60,10 +67,12 @@ public class TableWidgetItem extends Item<ItemTableBinding> {
             return;
         }
 
+        binding.widgetWrapper.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
         binding.pager.setAdapter(new TablePagerAdapter());
         binding.tabLayout.setupWithViewPager(binding.pager, true);
 
         binding.progressBar.setVisibility(View.GONE);
+        binding.title.setVisibility(View.VISIBLE);
         binding.pager.setVisibility(View.VISIBLE);
         binding.tabLayout.setVisibility(View.VISIBLE);
     }
