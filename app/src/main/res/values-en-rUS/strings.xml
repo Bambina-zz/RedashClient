@@ -48,5 +48,7 @@
     <!-- Strings related to table widget -->
     <string name="less_than_msg">Sorry, table widget is now displaying less than 26 rows.</string>
 
+    <!-- Strings related to unsupported widget -->
     <string name="data_parse_error">Sorry, this widget isn\'t supported yet. JSON parser throws an exception.</string>
+    <string name="data_not_supported">Sorry, this widget isn\'t supported yet. Datetime axis is only supported for a x axis.</string>
 </resources>

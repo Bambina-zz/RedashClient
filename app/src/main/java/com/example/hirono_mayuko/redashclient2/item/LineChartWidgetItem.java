@@ -44,12 +44,18 @@ public class LineChartWidgetItem extends Item<ItemLineChartBinding> {
             return;
         }
 
-        if(mWidget.isFailed){
+        if(mWidget.isJsonException || !mWidget.isDateTime){
             Context c = mainActivity.getContext();
             int layoutHeight = Math.round(DimensionHelper.convertDpToPx(c, 300f));
             binding.widgetWrapper.getLayoutParams().height = layoutHeight;
+            String errMsg;
+            if(mWidget.isJsonException){
+                errMsg = c.getResources().getString(R.string.data_parse_error);
+            } else {
+                errMsg = c.getResources().getString(R.string.data_not_supported);
+            }
             binding.progressBar.setVisibility(View.GONE);
-            binding.errMsg.setText(c.getResources().getString(R.string.data_parse_error));
+            binding.errMsg.setText(errMsg);
             binding.errMsg.setVisibility(View.VISIBLE);
             return;
         }

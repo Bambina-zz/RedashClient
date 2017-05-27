@@ -47,5 +47,8 @@
 
     <!-- Strings related to table widget -->
     <string name="less_than_msg">テーブルウィジェットは現在、25アイテムしか表示しません。すみません。</string>
+
+    <!-- Strings related to unsupported widget -->
     <string name="data_parse_error">すみません。このウィジェットは対応していません。JSONパーサーが例外を投げました。</string>
+    <string name="data_not_supported">すみません。このウィジェットは対応していません。X軸はDatetimeのみ対応しております。</string>
 </resources>
