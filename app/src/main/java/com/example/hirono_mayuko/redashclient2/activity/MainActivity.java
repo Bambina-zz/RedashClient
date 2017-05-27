@@ -148,17 +148,38 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(this, RegisterActivity.class);
             startActivityForResult(i, INTENT_ADD_REDASH);
         } else {
-            initializeDrawerMenu(selectedRedash, selectedDashboard);
-            setConnectionProperties(selectedRedash);
-
-            mAdapter.clear();
-            if(dashboards.isEmpty()){
-                TextView tv = (TextView) findViewById(R.id.noDashboard);
-                tv.setVisibility(View.VISIBLE);
-            } else {
-                // Load the dashboard data.
-                loadDashboardData(selectedDashboard);
+            if(savedInstanceState == null) {
+                initVIew();
             }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        savedInstanceState.putInt(SELECTED_REDASH, selectedRedash);
+        savedInstanceState.putInt(SELECTED_DASHBOARD, selectedDashboard);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        selectedRedash = outState.getInt(SELECTED_REDASH);
+        selectedDashboard = outState.getInt(SELECTED_DASHBOARD);
+        initVIew();
+    }
+
+    private void initVIew(){
+        initializeDrawerMenu(selectedRedash, selectedDashboard);
+        setConnectionProperties(selectedRedash);
+
+        mAdapter.clear();
+        if (dashboards.isEmpty()) {
+            TextView tv = (TextView) findViewById(R.id.noDashboard);
+            tv.setVisibility(View.VISIBLE);
+        } else {
+            // Load the dashboard data.
+            loadDashboardData(selectedDashboard);
         }
     }
 
