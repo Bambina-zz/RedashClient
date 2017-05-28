@@ -2,6 +2,7 @@ package com.example.hirono_mayuko.redashclient2;
 
 import android.text.format.DateFormat;
 
+import com.example.hirono_mayuko.redashclient2.widget.ColumnChartWidget;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -10,6 +11,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,6 +37,7 @@ public class ChartHelper {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(xFormatter);
+        xAxis.setLabelCount(5, true);
         xAxis.setTextSize(11);
 
         YAxis leftYAxis = lineChart.getAxisLeft();
@@ -47,19 +51,35 @@ public class ChartHelper {
         lineChart.getLegend().setEnabled(false);
     }
 
-    public static void barChartAxisOptions(BarChart barChart, final Long maxTime, final Long minTime){
-        IAxisValueFormatter xFormatter = new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                Float time = minTime + value * (maxTime - minTime);
-                Date date = new Date(time.longValue());
-                long diff = maxTime - minTime;
-                String formatter = DateTimeHelper.getFormat(diff, value);
-                return DateFormat.format(formatter, date).toString();
-            }
-        };
+    public static void barChartAxisOptions(BarChart barChart, ColumnChartWidget widget){
+        final long minTime = widget.minTime;
+        final long maxTime = widget.maxTime;
+        final String xAxisType = widget.xAxisType;
+        final ArrayList<String> xLabels = widget.xLabels;
+
+        IAxisValueFormatter xFormatter;
+        if(xAxisType.equals("datetime")){
+            xFormatter = new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    Float time = minTime + value * (maxTime - minTime);
+                    Date date = new Date(time.longValue());
+                    long diff = maxTime - minTime;
+                    String formatter = DateTimeHelper.getFormat(diff, value);
+                    return DateFormat.format(formatter, date).toString();
+                }
+            };
+        } else {
+            xFormatter = new IAxisValueFormatter() {
+                @Override
+                public String getFormattedValue(float value, AxisBase axis) {
+                    return xLabels.get(Math.round((xLabels.size()-1) * value));
+                }
+            };
+        }
         XAxis xAxis = barChart.getXAxis();
         xAxis.setValueFormatter(xFormatter);
+        xAxis.setLabelCount(5, true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAxisMinimum(-0.05f);
         xAxis.setAxisMaximum(1.05f);

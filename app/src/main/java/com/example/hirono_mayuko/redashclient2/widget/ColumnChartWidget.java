@@ -34,12 +34,15 @@ public class ColumnChartWidget extends Widget {
     public boolean isDateTime = true;
     public int numBars = 0;
     public int numSeries = 0;
+    public String xAxisType;
+    public ArrayList<String> xLabels = new ArrayList<>();
     private HashMap<String, String> mVisualData;
     private MainActivity mainActivity;
     private ColumnChartWidgetItem mItem;
     private static final String X_MILLI_SEC = "xmsec";
     private static final String LABEL = "label";
     private static final String NORMALIZED_X = "normalizedX";
+    private static final String X = "x";
     private static final String Y = "y";
 
     public ColumnChartWidget(HashMap<String, String> visualData, MainActivity activity, ColumnChartWidgetItem item){
@@ -68,7 +71,7 @@ public class ColumnChartWidget extends Widget {
         mBarData = new BarData();
 
         // TODO: In this function xAxisType is supposed to be "datetime".
-        String xAxisType = mVisualData.get(Dashboard.X_AXIS_TYPE);
+        xAxisType = mVisualData.get(Dashboard.X_AXIS_TYPE);
         if(xAxisType.equals("datetime")) {
             Locale locale = Locale.getDefault();
             // TODO: Data type of both "2017-5-26" and "2017-05-23T03:15:00+00:00" is datetime.
@@ -163,6 +166,68 @@ public class ColumnChartWidget extends Widget {
                     float yVal = (float) entry.get(Y);
                     entries.add(new BarEntry(xVal, yVal));
                     numBars++;
+                }
+                BarDataSet set = new BarDataSet(entries, key);
+                int[] color = mainActivity.getChartColor(numSeries);
+                set.setColors(color, mainActivity.getContext());
+                mBarData.addDataSet(set);
+                numSeries++;
+            }
+        } else if(xAxisType.equals("category")) {
+            // TODO: Refactoring!!!
+            for (int i = 0; i < dataArray.length(); i++) {
+                try {
+                    JSONObject obj = dataArray.getJSONObject(i);
+                    String label = obj.getString(xAxis);
+                    float y = Float.parseFloat(obj.getString(yAxis));
+
+                    xLabels.add(label);
+
+                    // Create a HashMap of an entry.
+                    HashMap<String, Object> entry = new HashMap<>();
+                    entry.put(X, i);
+                    entry.put(Y, y);
+
+                    if (mData.containsKey(Dashboard.SERIES)) {
+                        List<HashMap<String, Object>> dataSet = mData.get(Dashboard.SERIES);
+                        dataSet.add(entry);
+                    } else {
+                        List<HashMap<String, Object>> dataSet = new ArrayList<>();
+                        dataSet.add(entry);
+                        mData.put(Dashboard.SERIES, dataSet);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    isJsonException = true;
+                    break;
+                }
+            }
+
+            numBars = mData.get(Dashboard.SERIES).size();
+            float xMin = 0f;
+            float xMax = numBars - 1f;
+
+            // Normalize x value(DateTime).
+            for (String key : mData.keySet()) {
+                List<HashMap<String, Object>> dataSet = mData.get(key);
+                for (HashMap<String, Object> entry : dataSet) {
+                    float normalizedX;
+                    if(xMin == xMax){
+                        normalizedX = 0.5f;
+                    } else {
+                        float x = (int) entry.get(X);
+                        normalizedX = (x - xMin) / (xMax - xMin);
+                    }
+                    entry.put(NORMALIZED_X, normalizedX);
+                }
+            }
+            for (String key : mData.keySet()) {
+                ArrayList<BarEntry> entries = new ArrayList<>();
+                List<HashMap<String, Object>> dataSet = mData.get(key);
+                for (HashMap<String, Object> entry : dataSet) {
+                    float xVal = (float) entry.get(NORMALIZED_X);
+                    float yVal = (float) entry.get(Y);
+                    entries.add(new BarEntry(xVal, yVal));
                 }
                 BarDataSet set = new BarDataSet(entries, key);
                 int[] color = mainActivity.getChartColor(numSeries);
