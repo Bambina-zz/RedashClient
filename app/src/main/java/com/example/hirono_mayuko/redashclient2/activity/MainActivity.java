@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     private RealmResults<Redash> redashes;
     private RealmResults<Dashboard> dashboards;
 
-    // Re:dash API
+    // Redash API
     private String redash_api_key = "";
     private String redash_domain = "";
 
@@ -83,15 +83,15 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout mContentMain;
     private GroupAdapter mAdapter;
 
-    // Re:dash API format
+    // Redash API format
     private static final String DASHBOARD_API = "%1$s/api/dashboards/%2$s?api_key=%3$s";
     private static final String QUERY_API = "%1$s/api/queries/%2$s/results.json?api_key=%3$s";
 
-    // Re:dash visual types
+    // Redash visual types
     public static final String CHART = "CHART";
     public static final String COUNTER = "COUNTER";
 
-    // Re:dash chart types
+    // Redash chart types
     public static final String PIE = "pie";
     public static final String LINE = "line";
     public static final String COLUMN = "column";
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity
         // Check if Redash object exists in Realm.
         redashes = mRealm.where(Redash.class).findAll();
         if(redashes.size() <= 0){
-            // Show Re:dash registration page.
+            // Show Redash registration page.
             Intent i = new Intent(this, RegisterActivity.class);
             startActivityForResult(i, INTENT_ADD_REDASH);
         } else {

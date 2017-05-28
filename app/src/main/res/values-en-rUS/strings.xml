@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RedashClient2</string>
+    <string name="app_name">Redash</string>
 
     <!-- Strings related to Main activity -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -9,8 +9,8 @@
 
     <string name="action_settings">Settings</string>
     <string name="add_dashboard">Add dashboard</string>
-    <string name="add_redash">Add Re:dash instance</string>
-    <string name="manage_redash">Manage Re:dash instances</string>
+    <string name="add_redash">Add Redash instance</string>
+    <string name="manage_redash">Manage Redash instances</string>
     <string name="manage_dashboard">Manage dashboards</string>
     <string name="delete_instance">Delete instance?</string>
     <string name="delete_dashboard">Delete dashboard?</string>
