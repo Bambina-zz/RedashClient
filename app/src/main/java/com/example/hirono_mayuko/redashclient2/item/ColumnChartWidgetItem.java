@@ -61,10 +61,12 @@ public class ColumnChartWidgetItem extends Item<ItemColumnChartBinding> {
 
         ChartHelper.barChartAxisOptions(binding.chart, mWidget.maxTime, mWidget.minTime);
         // TODO: This is the problem, how I can organize width of a bar in a group?
-        //float groupSpace = 0.03f;
-        //float barSpace = 0f;
-        float barWidth = 0.03f;
-        // (0.00 + 0.17) *2 + 0.03 = 0.37
+        float groupSpace = 0.4f / mWidget.numSeries;
+        float barSpace = 0.4f / mWidget.numBars;
+        float barWidth = groupSpace / mWidget.numBars;
+        if(mWidget.numSeries > 1){
+            mWidget.mBarData.groupBars(0f,groupSpace, barSpace);
+        }
         mWidget.mBarData.setBarWidth(barWidth);
         binding.chart.setData(mWidget.mBarData);
         binding.chart.invalidate();

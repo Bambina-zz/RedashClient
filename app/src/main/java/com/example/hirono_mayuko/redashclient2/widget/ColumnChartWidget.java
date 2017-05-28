@@ -32,6 +32,8 @@ public class ColumnChartWidget extends Widget {
     public Long maxTime = 0L;
     public boolean isJsonException = false;
     public boolean isDateTime = true;
+    public int numBars = 0;
+    public int numSeries = 0;
     private HashMap<String, String> mVisualData;
     private MainActivity mainActivity;
     private ColumnChartWidgetItem mItem;
@@ -100,6 +102,7 @@ public class ColumnChartWidget extends Widget {
                     } else {
                         seriesName = obj.getString(series);
                     }
+
                     if (mData.containsKey(seriesName)) {
                         List<HashMap<String, Object>> dataSet = mData.get(seriesName);
                         dataSet.add(entry);
@@ -152,7 +155,6 @@ public class ColumnChartWidget extends Widget {
                     entry.put(NORMALIZED_X, normalizedX);
                 }
             }
-            int index = 0;
             for (String key : mData.keySet()) {
                 ArrayList<BarEntry> entries = new ArrayList<>();
                 List<HashMap<String, Object>> dataSet = mData.get(key);
@@ -160,13 +162,13 @@ public class ColumnChartWidget extends Widget {
                     float xVal = (float) entry.get(NORMALIZED_X);
                     float yVal = (float) entry.get(Y);
                     entries.add(new BarEntry(xVal, yVal));
+                    numBars++;
                 }
-
                 BarDataSet set = new BarDataSet(entries, key);
-                int[] color = mainActivity.getChartColor(index);
+                int[] color = mainActivity.getChartColor(numSeries);
                 set.setColors(color, mainActivity.getContext());
-                index++;
                 mBarData.addDataSet(set);
+                numSeries++;
             }
         } else {
             isDateTime = false;
