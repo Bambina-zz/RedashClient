@@ -1,4 +1,4 @@
-package com.example.hirono_mayuko.redashclient2;
+package com.bambina.redash;
 
 import org.junit.Test;
 

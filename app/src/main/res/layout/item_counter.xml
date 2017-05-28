@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="counterWidget" type="com.example.hirono_mayuko.redashclient2.widget.CounterWidget" />
+        <variable name="counterWidget" type="com.bambina.redash.widget.CounterWidget" />
     </data>
     <LinearLayout
         android:id="@+id/widgetWrapper"

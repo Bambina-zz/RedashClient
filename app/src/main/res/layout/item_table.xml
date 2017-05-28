@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="tableWidget" type="com.example.hirono_mayuko.redashclient2.widget.TableWidget" />
+        <variable name="tableWidget" type="com.bambina.redash.widget.TableWidget" />
     </data>
     <LinearLayout
         android:id="@+id/widgetWrapper"

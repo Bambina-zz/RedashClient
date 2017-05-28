@@ -8,7 +8,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.example.hirono_mayuko.redashclient2"
+        applicationId "com.bambina.redash"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1

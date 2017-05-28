@@ -1,4 +1,4 @@
-package com.example.hirono_mayuko.redashclient2;
+package com.bambina.redash;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.hirono_mayuko.redashclient2", appContext.getPackageName());
+        assertEquals("com.bambina.redash", appContext.getPackageName());
     }
 }
