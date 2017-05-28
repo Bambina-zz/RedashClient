@@ -69,19 +69,22 @@ public class ColumnChartWidget extends Widget {
         String xAxisType = mVisualData.get(Dashboard.X_AXIS_TYPE);
         if(xAxisType.equals("datetime")) {
             Locale locale = Locale.getDefault();
+            // TODO: Data type of both "2017-5-26" and "2017-05-23T03:15:00+00:00" is datetime.
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", locale);
+            try {
+                String x = dataArray.getJSONObject(0).getString(xAxis);
+                if (x.contains("T")) {
+                    format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'", locale);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                isJsonException = true;
+            }
 
             for (int i = 0; i < dataArray.length(); i++) {
                 try {
                     JSONObject obj = dataArray.getJSONObject(i);
-
                     String x = obj.getString(xAxis);
-                    // TODO: Data type of both "2017-5-26" and "2017-05-23T03:15:00+00:00" is datetime.
-                    SimpleDateFormat format;
-                    if (x.contains("T")) {
-                        format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'+'", locale);
-                    } else {
-                        format = new SimpleDateFormat("yyyy-MM-dd", locale);
-                    }
                     long xMillisec = ConvertDateFromString.parse(x, format).getTime();
                     float y = Float.parseFloat(obj.getString(yAxis));
 

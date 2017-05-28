@@ -44,6 +44,7 @@ public class ChartHelper {
         rightYAxis.setDrawGridLines(false);
         rightYAxis.setDrawLabels(false);
         lineChart.getDescription().setText("");
+        lineChart.getLegend().setEnabled(false);
     }
 
     public static void barChartAxisOptions(BarChart barChart, final Long maxTime, final Long minTime){
@@ -71,6 +72,7 @@ public class ChartHelper {
         YAxis yAxisLeft = barChart.getAxisLeft();
         yAxisLeft.setValueFormatter(new LargeValueFormatter());
         yAxisLeft.setAxisMinimum(0f);
+        barChart.getLegend().setEnabled(false);
     }
 
     private static class DateTimeHelper {
