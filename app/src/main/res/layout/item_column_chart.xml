@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="columnChartWidget" type="com.bambina.redash.widget.ColumnChartWidget" />
+        <variable name="columnChartWidget" type="com.bambina.dashboardViewer.widget.ColumnChartWidget" />
     </data>
     <LinearLayout
         android:id="@+id/widgetWrapper"

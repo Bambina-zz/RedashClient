@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.bambina.redash.activity.RegisterActivity">
+    tools:context="com.bambina.dashboardViewer.activity.RegisterActivity">
 
     <!-- Login progress -->
     <ProgressBar

@@ -8,7 +8,7 @@ android {
         enabled = true
     }
     defaultConfig {
-        applicationId "com.bambina.redash"
+        applicationId "com.bambina.dashboardViewer"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
