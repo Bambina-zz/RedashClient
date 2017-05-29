@@ -174,8 +174,8 @@ public class MainActivity extends AppCompatActivity
         setConnectionProperties(selectedRedash);
 
         mAdapter.clear();
-        if (dashboards.isEmpty()) {
-            TextView tv = (TextView) findViewById(R.id.noDashboard);
+        if(dashboards.isEmpty()) {
+            TextView tv = (TextView) findViewById(R.id.no_dashboard);
             tv.setVisibility(View.VISIBLE);
         } else {
             // Load the dashboard data.
@@ -193,8 +193,11 @@ public class MainActivity extends AppCompatActivity
                     initializeDrawerMenu(selectedRedash, INITIAL_INDEX);
                     setConnectionProperties(selectedRedash);
                     mAdapter.clear();
-                    // Load the dashboard data.
-                    if(!dashboards.isEmpty()){
+                    if(dashboards.isEmpty()) {
+                        TextView tv = (TextView) findViewById(R.id.no_dashboard);
+                        tv.setVisibility(View.VISIBLE);
+                    } else {
+                        // Load the dashboard data.
                         loadDashboardData(INITIAL_INDEX);
                     }
                     break;
@@ -207,7 +210,7 @@ public class MainActivity extends AppCompatActivity
             switch (resultCode){
                 case RESULT_OK:
                     drawer.closeDrawer(GravityCompat.START);
-                    findViewById(R.id.noDashboard).setVisibility(View.GONE);
+                    findViewById(R.id.no_dashboard).setVisibility(View.GONE);
                     selectedRedash = data.getIntExtra(SELECTED_REDASH, 0);
                     initializeDrawerMenu(selectedRedash, dashboards.size()-1);
                     mAdapter.clear();

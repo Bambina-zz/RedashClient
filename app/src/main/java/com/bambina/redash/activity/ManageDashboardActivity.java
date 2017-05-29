@@ -106,9 +106,9 @@ public class ManageDashboardActivity extends AppCompatActivity {
         helper.attachToRecyclerView(mRecyclerView);
 
         if(mDashboards.size() == 0){
-           findViewById(R.id.noDashboard).setVisibility(View.VISIBLE);
+           findViewById(R.id.no_dashboard).setVisibility(View.VISIBLE);
         } else {
-            findViewById(R.id.noDashboard).setVisibility(View.GONE);
+            findViewById(R.id.no_dashboard).setVisibility(View.GONE);
         }
     }
 
