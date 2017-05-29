@@ -3,8 +3,6 @@ package com.bambina.dashboardViewer;
 import android.app.Application;
 
 import com.bambina.dashboardViewer.model.Redash;
-import com.facebook.stetho.Stetho;
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -26,12 +24,6 @@ public class RedashApplication extends Application {
         Realm.init(getApplicationContext());
         RealmConfiguration c = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(c);
-
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                        .build());
     }
 
     public static OkHttpClient getmClient() {
